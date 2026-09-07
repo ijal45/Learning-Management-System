@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pretest - Asesmen TAV SMKN 3 Surabaya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #222636;
+      --border: rgba(255,255,255,0.07);
+      --accent: #4f8ef7;
+      --accent2: #7c5cfc;
+      --green: #22c55e;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --text: #e8eaf0;
+      --text-muted: #7880a0;
+      --radius: 14px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px 16px 60px;
+    }
+
+    .header {
+      max-width: 820px;
+      margin: 0 auto 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .header-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 10px;
+      display: grid; place-items: center;
+      font-size: 1.2rem;
+    }
+    .header h1 { font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .header h1 span { color: var(--text-muted); font-weight: 500; font-size: .8rem; display: block; }
+
+    .student-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 6px 14px;
+      font-size: .85rem;
+    }
+    .student-badge .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .timer-bar {
+      max-width: 820px; margin: 0 auto 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+    }
+    .timer-label { font-size: .8rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+    .timer-value { font-size: 1.6rem; font-weight: 700; color: var(--yellow); font-variant-numeric: tabular-nums; transition: color .3s; }
+    .timer-value.danger { color: var(--red); animation: blink .8s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.5} }
+    .progress-track { flex: 1; height: 6px; background: var(--surface2); border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 999px; transition: width 1s linear; }
+
+    .card {
+      max-width: 820px; margin: 0 auto 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      transition: border-color .2s;
+    }
+    .card:hover { border-color: rgba(79,142,247,.25); }
+    .q-number {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; font-size: .7rem; font-weight: 700;
+      padding: 2px 10px; border-radius: 999px;
+      margin-bottom: 10px; letter-spacing: .04em;
+    }
+    .q-text { font-size: .95rem; font-weight: 600; line-height: 1.6; margin-bottom: 16px; }
+
+    /* ── Gambar soal (opsional) ── */
+    .q-image {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      display: block;
+      border: 1px solid var(--border);
+    }
+
+    .option-label {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: background .15s, border-color .15s;
+      font-size: .9rem; line-height: 1.5;
+    }
+    .option-label:hover { background: rgba(79,142,247,.08); border-color: rgba(79,142,247,.3); }
+    .option-label input[type="radio"] { display: none; }
+    .option-label .radio-dot {
+      width: 18px; height: 18px; min-width: 18px;
+      border: 2px solid var(--text-muted);
+      border-radius: 50%;
+      margin-top: 2px;
+      transition: background .15s, border-color .15s;
+      display: grid; place-items: center;
+    }
+    .option-label:has(input:checked) { color: var(--accent); background: rgba(79,142,247,.1); border-color: var(--accent); }
+    .option-label:has(input:checked) .radio-dot { background: var(--accent); border-color: var(--accent); }
+    .option-label:has(input:checked) .radio-dot::after { content: ''; width: 6px; height: 6px; background: white; border-radius: 50%; }
+
+    .submit-wrap { max-width: 820px; margin: 28px auto 0; text-align: center; }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; border: none; border-radius: 12px;
+      padding: 15px 40px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      box-shadow: 0 4px 24px rgba(79,142,247,.35);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(79,142,247,.45); }
+    .btn-submit:active { transform: translateY(0); }
+
+    #result-screen { display: none; max-width: 820px; margin: 0 auto; }
+
+    .score-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 24px;
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative; overflow: hidden;
+    }
+    .score-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% -20%, rgba(79,142,247,.15), transparent 70%);
+      pointer-events: none;
+    }
+    .score-ring { width: 130px; height: 130px; margin: 0 auto 20px; position: relative; }
+    .score-ring svg { transform: rotate(-90deg); }
+    .score-ring .ring-bg { fill: none; stroke: var(--surface2); stroke-width: 10; }
+    .score-ring .ring-val { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1); }
+    .score-ring .ring-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .score-ring .ring-pct { font-size: 1.8rem; font-weight: 800; }
+    .score-ring .ring-label { font-size: .7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+    .score-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+    .score-sub { font-size: .95rem; color: var(--text-muted); }
+
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; text-align: center; }
+    .stat-card .stat-val { font-size: 1.6rem; font-weight: 800; }
+    .stat-card .stat-lbl { font-size: .75rem; color: var(--text-muted); font-weight: 500; margin-top: 4px; text-transform: uppercase; letter-spacing: .05em; }
+
+    .review-title { font-size: 1rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .review-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 10px; }
+    .review-q { font-size: .9rem; font-weight: 600; line-height: 1.55; margin-bottom: 12px; }
+
+    .btn-back {
+      display: inline-block; margin-top: 24px;
+      padding: 13px 32px; border-radius: 12px;
+      background: var(--surface2); color: var(--text);
+      border: 1px solid var(--border);
+      font-family: inherit; font-size: .95rem; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: background .15s;
+    }
+    .btn-back:hover { background: var(--surface); }
+
+    #locked-screen {
+      display: none; max-width: 820px; margin: 60px auto;
+      text-align: center; padding: 60px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+    #locked-screen .lock-icon { font-size: 3rem; margin-bottom: 16px; }
+    #locked-screen h3 { font-size: 1.3rem; margin-bottom: 8px; }
+    #locked-screen p { color: var(--text-muted); margin-bottom: 24px; }
+
+    .answer-counter {
+      max-width: 820px; margin: 0 auto 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: .85rem; color: var(--text-muted);
+    }
+    .answer-counter strong { color: var(--text); }
+    .answer-dots { display: flex; flex-wrap: wrap; gap: 5px; flex: 1; }
+    .answer-dots .dot-q {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--surface2); border: 1px solid var(--border);
+      display: grid; place-items: center;
+      font-size: .65rem; font-weight: 700; color: var(--text-muted);
+      transition: background .2s, color .2s;
+    }
+    .answer-dots .dot-q.answered { background: var(--accent); color: white; border-color: var(--accent); }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: repeat(3,1fr); }
+      .timer-bar { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-brand">
+      <div class="header-icon">⚡</div>
+      <h1>Pretest Gambar Teknik<span>TAV — SMKN 3 Surabaya</span></h1>
+    </div>
+    <div class="student-badge" id="student-badge">
+      <div class="dot"></div>
+      <span id="student-info">Memuat...</span>
+    </div>
+  </div>
+
+  <!-- Locked -->
+  <div id="locked-screen">
+    <div class="lock-icon">🔒</div>
+    <h3>Anda sudah mengerjakan tes ini</h3>
+    <p>Setiap siswa hanya dapat mengerjakan tes ini satu kali.</p>
+    <div id="prev-score-info" style="
+      display:inline-block; margin-bottom:24px;
+      background:rgba(79,142,247,.1); border:1px solid rgba(79,142,247,.3);
+      border-radius:12px; padding:14px 28px; font-size:1rem; font-weight:600; color:var(--accent);">
+      Memuat skor...
+    </div>
+    <br>
+    <button onclick="showPrevResult()" class="btn-submit" style="margin-bottom:14px;">
+      📋 Lihat Hasil &amp; Review Jawaban
+    </button>
+    <br>
+    <a href="assessment.html" class="btn-back" style="margin-top:12px;">← Kembali ke Asesmen</a>
+  </div>
+
+  <!-- Quiz Screen -->
+  <div id="quiz-screen" style="display:none;">
+    <div class="timer-bar">
+      <div>
+        <div class="timer-label">Waktu Tersisa</div>
+        <div class="timer-value" id="time">45:00</div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:100%"></div>
+      </div>
+    </div>
+
+    <div class="answer-counter">
+      <span>Terjawab: <strong><span id="ans-count">0</span>/20</strong></span>
+      <div class="answer-dots" id="ans-dots"></div>
+    </div>
+
+    <div id="questions-container"></div>
+
+    <div class="submit-wrap">
+      <button class="btn-submit" onclick="confirmSubmit()">Kirim Jawaban & Lihat Hasil ✓</button>
+    </div>
+  </div>
+
+  <!-- Result Screen -->
+  <div id="result-screen">
+    <div class="score-hero">
+      <div class="score-ring">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle class="ring-bg" cx="65" cy="65" r="55"/>
+          <circle class="ring-val" id="ring-circle" cx="65" cy="65" r="55"
+            stroke-dasharray="345.4" stroke-dashoffset="345.4"/>
+        </svg>
+        <div class="ring-text">
+          <span class="ring-pct" id="ring-pct">0%</span>
+          <span class="ring-label">Skor</span>
+        </div>
+      </div>
+      <div class="score-title" id="result-grade"></div>
+      <div class="score-sub" id="result-sub"></div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val" id="stat-correct" style="color:var(--green)">0</div>
+        <div class="stat-lbl">✓ Benar</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="stat-wrong" style="color:var(--red)">0</div>
+        <div class="stat-lbl">✗ Salah</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="stat-skip" style="color:var(--yellow)">0</div>
+        <div class="stat-lbl">– Kosong</div>
+      </div>
+    </div>
+
+    <div class="review-title">📋 Review Jawaban</div>
+    <div id="review"></div>
+
+    <div style="text-align:center;">
+      <a href="assessment.html" class="btn-back">← Kembali ke Asesmen</a>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="auth.js"></script>
+
+  <script>
+    // ══════════════════════════════════════════
+    //  GUARD: Harus login dulu
+    // ══════════════════════════════════════════
+    if (!isLoggedIn()) {
+      alert('Silakan login terlebih dahulu.');
+      window.location.href = 'login.html';
+    }
+
+    // ══════════════════════════════════════════
+    //  KONFIGURASI HALAMAN INI (tetap: PRETEST)
+    // ══════════════════════════════════════════
+    const testType = 'pre';
+    const testName = 'PRETEST';
+
+    // ══════════════════════════════════════════
+    //  DATA SOAL PRETEST
+    //  ── Untuk menambahkan gambar pada soal, isi field "image"
+    //     dengan path file gambar, contoh:
+    //     image: "images/soal/pretest-01.jpg"
+    //  Kosongkan / hapus baris "image" jika soal tidak butuh gambar.
+    // ══════════════════════════════════════════
+    const pretestData = [
+      { image: "images/soal/pre/Picture1.png", q: "Perhatikan ilustrasi simbol baterai: dua garis sejajar, satu panjang (positif) dan satu pendek (negatif). Jika simbol ini diputar 180°, maka yang terjadi adalah…", options: ["A. Positif menjadi di kanan, negatif di kiri","B. Positif tetap panjang, negatif tetap pendek, tetapi posisi tertukar (positif di bawah)","C. Simbol berubah menjadi kapasitor","D. Simbol tidak berubah sama sekali","E. Kedua garis menjadi sama panjang"], answer: "B" },
+      { image: "images/soal/pre/Picture2.png", q: "Sebuah simbol digambarkan sebagai garis zig-zag. Simbol tersebut adalah standar ANSI untuk komponen…", options: ["A. Kapasitor","B. Induktor","C. Resistor","D. Dioda","E. Baterai"], answer: "C" },
+      { image: "images/soal/pre/Picture3.png", q: "Perhatikan rangkaian berikut: baterai → saklar (ON) → resistor → LED → kembali ke baterai. Jika saklar dalam posisi ON, manakah pernyataan yang benar tentang aliran arus?", options: ["A. Arus berhenti di resistor","B. Arus mengalir dari negatif ke positif","C. Arus mengalir dari positif baterai menuju negatif melalui saklar, resistor, dan LED","D. Arus hanya mengalir di saklar","E. LED menyala tanpa arus"], answer: "C" },
+      { image: null, q: "Penggaris T pada gambar teknik terutama digunakan untuk…", options: ["A. Membuat garis vertikal","B. Membuat garis horizontal yang panjang","C. Membuat lingkaran","D. Mengukur sudut","E. Membuat garis lengkung"], answer: "B" },
+      { image: null, q: "Seorang siswa ingin membuat garis tipis untuk gambar rancangan teknis yang mendetail. Pensil dengan kode yang paling sesuai adalah…", options: ["A. 6B","B. 2B","C. HB","D. 2H","E. 8B"], answer: "D" },
+      { image: null, q: "Untuk membuat garis vertikal yang tegak lurus terhadap garis horizontal yang sudah ada, kombinasi alat yang paling tepat adalah…", options: ["A. Penggaris T saja","B. Mal lengkung","C. Penggaris segitiga dikombinasikan dengan penggaris T","D. Jangka","E. Busur derajat"], answer: "C" },
+      { image: "images/soal/pre/Picture4.png", q: "Perhatikan deskripsi visual: sebuah simbol berbentuk segitiga/panah yang menuju ke sebuah garis. Simbol ini menunjukkan komponen…", options: ["A. LED","B. Resistor","C. Kapasitor","D. Dioda","E. Transistor"], answer: "D" },
+      { image: null, q: "Alat ukur yang digunakan untuk menampilkan bentuk gelombang sinyal listrik pada layar adalah…", options: ["A. Multimeter","B. Osiloskop","C. Clamp meter","D. LCR meter","E. Wattmeter"], answer: "B" },
+      { image: "images/soal/pre/Picture5.png", q: "Simbol kapasitor elektrolit (polar) memiliki tanda positif (+) pada satu sisi. Jika simbol ini dicerminkan secara horizontal (kiri-kanan), maka…", options: ["A. Simbol menjadi kapasitor non-polar","B. Posisi positif tetap di sisi yang sama secara visual setelah pencerminan","C. Simbol berubah menjadi dioda","D. Kapasitor kehilangan fungsinya","E. Simbol tidak berubah"], answer: "B" },
+      { image: null, q: "Menurut standar ISO 216, ukuran kertas A4 adalah…", options: ["A. 210 × 297 mm","B. 297 × 420 mm","C. 420 × 594 mm","D. 148 × 210 mm","E. 841 × 1189 mm"], answer: "A" },
+      { image: null, q: "Dalam sebuah rangkaian, dua resistor disusun secara seri. Manakah pernyataan yang benar?", options: ["A. Tegangan pada setiap resistor sama","B. Arus yang mengalir pada setiap resistor berbeda","C. Arus yang mengalir pada setiap resistor sama","D. Hambatan total lebih kecil dari hambatan terkecil","E. Resistor paralel memiliki arus yang sama"], answer: "C" },
+      { image: null, q: "Alat yang memiliki cetakan bentuk objek (seperti simbol elektronik) untuk menggambar dengan cepat disebut…", options: ["A. Mal lengkung","B. Mal bentuk","C. Mal huruf","D. Jangka","E. Mistar skala"], answer: "B" },
+      { image: null, q: "Fungsi utama jangka dalam gambar teknik adalah…", options: ["A. Membuat garis lurus horizontal","B. Menggambar lingkaran atau busur lingkaran","C. Membuat garis lengkung bebas","D. Menulis huruf standar","E. Mengukur sudut"], answer: "B" },
+      { image: null, q: "Saat menarik garis dengan pensil dan penggaris segitiga, posisi pensil yang benar terhadap segitiga adalah…", options: ["A. Tegak lurus 90°","B. Miring 45°","C. Horizontal","D. Terbalik","E. Bebas"], answer: "A" },
+      { image: null, q: "Simbol yang memiliki dua panah keluar dari segitiga (menunjukkan pancaran cahaya) adalah simbol untuk…", options: ["A. Dioda biasa","B. LED","C. Transistor NPN","D. Transistor PNP","E. Baterai"], answer: "B" },
+      { image: null, q: "Seorang siswa menggunakan pensil 6B untuk membuat garis gambar teknik pada kertas A4. Kemungkinan masalah yang akan terjadi adalah…", options: ["A. Garis terlalu tipis dan tidak terbaca","B. Garis terlalu tebal, mudah luntur, dan tidak presisi","C. Pensil tidak bisa diraut","D. Kertas robek","E. Tidak ada masalah"], answer: "B" },
+      { image: null, q: "Mistar skala (penggaris skala segitiga) berfungsi untuk…", options: ["A. Membuat garis lengkung","B. Menggambar lingkaran","C. Mengetahui perbandingan ukuran benda secara tetap","D. Melindungi garis saat dihapus","E. Membuat huruf standar"], answer: "C" },
+      { image: null, q: "Pada simbol transistor NPN, arah panah pada kaki emitor menunjukkan…", options: ["A. Arus mengalir masuk ke basis","B. Arus mengalir keluar dari emitor","C. Arus mengalir ke kolektor","D. Tidak ada arah arus","E. Panah menunjukkan tegangan"], answer: "B" },
+      { image: null, q: "Mal pelindung digunakan ketika…", options: ["A. Membuat garis lengkung","B. Menghapus garis yang jaraknya berdekatan agar garis lain aman","C. Membuat lingkaran","D. Menggambar simbol","E. Mengukur sudut"], answer: "B" },
+      { image: null, q: "Seorang siswa ingin menggambar lingkaran dengan diameter 80 mm. Berapa mm bukaan jangka yang harus diatur?", options: ["A. 40 mm","B. 80 mm","C. 160 mm","D. 20 mm","E. 100 mm"], answer: "A" }
+    ];
+
+    // ══════════════════════════════════════════
+    //  UTIL: Acak urutan soal (Fisher–Yates)
+    //  Catatan: hanya urutan SOAL yang diacak, urutan
+    //  pilihan A-E pada tiap soal TIDAK diubah, jadi kunci
+    //  jawaban tetap aman.
+    // ══════════════════════════════════════════
+    function shuffleArray(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    // ══════════════════════════════════════════
+    //  INIT
+    // ══════════════════════════════════════════
+    const uid         = getCurrentUID();
+    const storageKey  = `tav_test_${testType}_${uid}`;
+    const currentQuiz = shuffleArray(pretestData); // soal sudah teracak per siswa
+
+    let answers       = {};
+    let timeLeft      = 45 * 60;
+    const TOTAL_TIME  = 45 * 60;
+    let timerInterval;
+
+    document.getElementById('student-info').textContent =
+      `${getNamaLengkap()} · ${getKelas()}`;
+
+    const savedData = localStorage.getItem(storageKey);
+    if (savedData) {
+      document.getElementById('locked-screen').style.display = 'block';
+      try {
+        const parsed = JSON.parse(savedData);
+        const pct    = parsed.percentage ?? '?';
+        const benar  = parsed.correct    ?? '?';
+        const tgl    = parsed.timestamp
+          ? new Date(parsed.timestamp).toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric' })
+          : '';
+        document.getElementById('prev-score-info').innerHTML =
+          `Skor kamu: <strong>${pct}%</strong> &nbsp;(${benar}/20 benar)${tgl ? `<br><small style="font-weight:400;color:var(--text-muted)">${tgl}</small>` : ''}`;
+      } catch(e) {
+        document.getElementById('prev-score-info').textContent = 'Data tersimpan. Klik tombol untuk review.';
+      }
+    } else {
+      document.getElementById('quiz-screen').style.display = 'block';
+      renderQuestions();
+      renderDots();
+      startTimer();
+    }
+
+    // ══════════════════════════════════════════
+    //  TAMPILKAN HASIL SEBELUMNYA (dari Firebase)
+    // ══════════════════════════════════════════
+    function showPrevResult() {
+      db.ref(`hasil_tes/${uid}/${testType}`).once('value').then(snap => {
+        const data = snap.val();
+
+        document.getElementById('locked-screen').style.display = 'none';
+        const resultEl = document.getElementById('result-screen');
+        resultEl.style.display = 'block';
+
+        const correct    = data ? data.correct    : 0;
+        const wrong      = data ? data.wrong      : 0;
+        const skip       = data ? data.skip       : 0;
+        const percentage = data ? data.percentage : 0;
+
+        document.getElementById('stat-correct').textContent = correct;
+        document.getElementById('stat-wrong').textContent   = wrong;
+        document.getElementById('stat-skip').textContent    = skip;
+
+        let grade, gradeColor;
+        if (percentage >= 90)      { grade = '🏆 Luar Biasa!';        gradeColor = '#f59e0b'; }
+        else if (percentage >= 75) { grade = '⭐ Sangat Baik';         gradeColor = '#22c55e'; }
+        else if (percentage >= 60) { grade = '👍 Cukup Baik';          gradeColor = '#4f8ef7'; }
+        else                        { grade = '📖 Perlu Belajar Lagi'; gradeColor = '#ef4444'; }
+
+        document.getElementById('result-grade').innerHTML = `<span style="color:${gradeColor}">${grade}</span>`;
+        document.getElementById('result-sub').textContent =
+          `Kamu menjawab benar ${correct} dari 20 soal — ${testName}`;
+
+        setTimeout(() => {
+          const circle = document.getElementById('ring-circle');
+          const pctEl  = document.getElementById('ring-pct');
+          const circumference = 2 * Math.PI * 55;
+          circle.style.stroke = gradeColor;
+          circle.style.strokeDashoffset = circumference - (percentage / 100) * circumference;
+          let cur = 0;
+          const step = Math.ceil(percentage / 40) || 1;
+          const iv = setInterval(() => {
+            cur = Math.min(cur + step, percentage);
+            pctEl.textContent = cur + '%';
+            if (cur >= percentage) clearInterval(iv);
+          }, 30);
+        }, 100);
+
+        let reviewHTML = '';
+        currentQuiz.forEach((item, i) => {
+          const imgHTML = item.image ? `<img src="${item.image}" alt="Ilustrasi Soal ${i+1}" class="q-image">` : '';
+          const optionsHTML = item.options.map(opt => {
+            const isKey = opt[0] === item.answer;
+            const style = isKey
+              ? 'background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.5);color:#22c55e;font-weight:700;'
+              : '';
+            const icon = isKey ? '🔑 ' : '';
+            return `<div style="padding:9px 14px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;font-size:.88rem;line-height:1.5;${style}">${icon}${opt}</div>`;
+          }).join('');
+
+          reviewHTML += `
+            <div class="review-card">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <div class="q-number" style="margin-bottom:0;">Soal ${i + 1}</div>
+              </div>
+              ${imgHTML}
+              <div class="review-q">${item.q}</div>
+              <div>${optionsHTML}</div>
+            </div>`;
+        });
+
+        document.getElementById('review').innerHTML = reviewHTML;
+        resultEl.scrollIntoView({ behavior: 'smooth' });
+
+      }).catch(err => {
+        console.error('Firebase error:', err);
+        document.getElementById('locked-screen').style.display = 'none';
+        const resultEl = document.getElementById('result-screen');
+        resultEl.style.display = 'block';
+        document.getElementById('stat-correct').textContent = '-';
+        document.getElementById('stat-wrong').textContent   = '-';
+        document.getElementById('stat-skip').textContent    = '-';
+        document.getElementById('result-grade').innerHTML   = '<span style="color:var(--accent)">Kunci Jawaban</span>';
+        document.getElementById('result-sub').textContent   = testName + ' — Koneksi gagal, hanya tampil kunci';
+        document.getElementById('ring-pct').textContent     = '-';
+
+        let reviewHTML = '';
+        currentQuiz.forEach((item, i) => {
+          const imgHTML = item.image ? `<img src="${item.image}" alt="Ilustrasi Soal ${i+1}" class="q-image">` : '';
+          const optionsHTML = item.options.map(opt => {
+            const isKey = opt[0] === item.answer;
+            const style = isKey
+              ? 'background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.5);color:#22c55e;font-weight:700;'
+              : '';
+            return `<div style="padding:9px 14px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;font-size:.88rem;${style}">${isKey ? '🔑 ' : ''}${opt}</div>`;
+          }).join('');
+          reviewHTML += `<div class="review-card"><div class="q-number" style="margin-bottom:10px;">Soal ${i + 1}</div>${imgHTML}<div class="review-q">${item.q}</div><div>${optionsHTML}</div></div>`;
+        });
+        document.getElementById('review').innerHTML = reviewHTML;
+        resultEl.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    // ══════════════════════════════════════════
+    //  RENDER
+    // ══════════════════════════════════════════
+    function renderQuestions() {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = currentQuiz.map((item, i) => `
+        <div class="card" id="card-${i}">
+          <div class="q-number">Soal ${i + 1}</div>
+          ${item.image ? `<img src="${item.image}" alt="Ilustrasi Soal ${i+1}" class="q-image">` : ''}
+          <div class="q-text">${item.q}</div>
+          ${item.options.map(opt => `
+            <label class="option-label">
+              <input type="radio" name="q${i}" value="${opt[0]}"
+                onchange="saveAnswer(${i}, '${opt[0]}')">
+              <div class="radio-dot"></div>
+              <span class="option-text">${opt}</span>
+            </label>
+          `).join('')}
+        </div>
+      `).join('');
+    }
+
+    function renderDots() {
+      const wrap = document.getElementById('ans-dots');
+      wrap.innerHTML = currentQuiz.map((_, i) =>
+        `<div class="dot-q" id="dot-${i}">${i+1}</div>`
+      ).join('');
+    }
+
+    function saveAnswer(index, value) {
+      answers[index] = value;
+      document.getElementById(`dot-${index}`).classList.add('answered');
+      const count = Object.keys(answers).length;
+      document.getElementById('ans-count').textContent = count;
+    }
+
+    // ══════════════════════════════════════════
+    //  TIMER
+    // ══════════════════════════════════════════
+    function startTimer() {
+      const timerEl = document.getElementById('time');
+      const fillEl  = document.getElementById('progress-fill');
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        const min = Math.floor(timeLeft / 60);
+        const sec = timeLeft % 60;
+        timerEl.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        fillEl.style.width = `${(timeLeft / TOTAL_TIME) * 100}%`;
+        if (timeLeft <= 300) timerEl.classList.add('danger');
+        if (timeLeft <= 0) submitQuiz();
+      }, 1000);
+    }
+
+    // ══════════════════════════════════════════
+    //  SUBMIT
+    // ══════════════════════════════════════════
+    function confirmSubmit() {
+      const answered = Object.keys(answers).length;
+      const unanswered = currentQuiz.length - answered;
+      if (unanswered > 0) {
+        if (!confirm(`Masih ada ${unanswered} soal yang belum dijawab. Yakin ingin mengirim?`)) return;
+      }
+      submitQuiz();
+    }
+
+    function submitQuiz() {
+      clearInterval(timerInterval);
+
+      let correct = 0, wrong = 0, skip = 0;
+      let reviewHTML = '';
+
+      currentQuiz.forEach((item, i) => {
+        const userAns   = answers[i] || null;
+        const isCorrect = userAns === item.answer;
+        if (!userAns)       skip++;
+        else if (isCorrect) correct++;
+        else                wrong++;
+
+        const optionsHTML = item.options.map(opt => {
+          const optKey    = opt[0];
+          const isKey     = optKey === item.answer;
+          const isChosen  = optKey === userAns;
+
+          let style = '';
+          let icon  = '';
+
+          if (isKey && isChosen) {
+            style = `background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.5);color:#22c55e;font-weight:700;`;
+            icon  = '✓ ';
+          } else if (isKey && !isChosen) {
+            style = `background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.4);color:#22c55e;font-weight:600;`;
+            icon  = '🔑 ';
+          } else if (isChosen && !isKey) {
+            style = `background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.5);color:#ef4444;font-weight:700;`;
+            icon  = '✗ ';
+          }
+
+          return `<div style="padding:9px 14px;border:1px solid var(--border);border-radius:8px;
+                    margin-bottom:7px;font-size:.88rem;line-height:1.5;${style}">
+                    ${icon}${opt}
+                  </div>`;
+        }).join('');
+
+        const statusBadge = !userAns
+          ? `<span style="background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3);
+               padding:3px 12px;border-radius:999px;font-size:.75rem;font-weight:700;">– Tidak Dijawab</span>`
+          : isCorrect
+          ? `<span style="background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3);
+               padding:3px 12px;border-radius:999px;font-size:.75rem;font-weight:700;">✓ Benar</span>`
+          : `<span style="background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);
+               padding:3px 12px;border-radius:999px;font-size:.75rem;font-weight:700;">✗ Salah</span>`;
+
+        reviewHTML += `
+          <div class="review-card">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+              <div class="q-number" style="margin-bottom:0;">Soal ${i + 1}</div>
+              ${statusBadge}
+            </div>
+            ${item.image ? `<img src="${item.image}" alt="Ilustrasi Soal ${i+1}" class="q-image">` : ''}
+            <div class="review-q">${item.q}</div>
+            <div>${optionsHTML}</div>
+          </div>`;
+      });
+
+      const percentage = Math.round((correct / currentQuiz.length) * 100);
+
+      localStorage.setItem(storageKey, JSON.stringify({ percentage, correct, timestamp: Date.now() }));
+
+      try {
+        db.ref(`hasil_tes/${uid}/${testType}`).set({
+          nama       : getNamaLengkap(),
+          kelas      : getKelas(),
+          email      : getCurrentEmail(),
+          score      : correct,
+          total      : currentQuiz.length,
+          percentage : percentage,
+          correct    : correct,
+          wrong      : wrong,
+          skip       : skip,
+          testName   : testName,
+          timestamp  : Date.now()
+        });
+      } catch(e) { console.warn('Firebase save failed:', e); }
+
+      document.getElementById('quiz-screen').style.display = 'none';
+      const resultEl = document.getElementById('result-screen');
+      resultEl.style.display = 'block';
+
+      document.getElementById('stat-correct').textContent = correct;
+      document.getElementById('stat-wrong').textContent   = wrong;
+      document.getElementById('stat-skip').textContent    = skip;
+      document.getElementById('review').innerHTML         = reviewHTML;
+
+      let grade, gradeColor;
+      if (percentage >= 90)      { grade = '🏆 Luar Biasa!';     gradeColor = '#f59e0b'; }
+      else if (percentage >= 75) { grade = '⭐ Sangat Baik';      gradeColor = '#22c55e'; }
+      else if (percentage >= 60) { grade = '👍 Cukup Baik';       gradeColor = '#4f8ef7'; }
+      else                        { grade = '📖 Perlu Belajar Lagi'; gradeColor = '#ef4444'; }
+
+      document.getElementById('result-grade').innerHTML = `<span style="color:${gradeColor}">${grade}</span>`;
+      document.getElementById('result-sub').textContent =
+        `Kamu menjawab benar ${correct} dari ${currentQuiz.length} soal — ${testName}`;
+
+      setTimeout(() => {
+        const circle    = document.getElementById('ring-circle');
+        const pctEl     = document.getElementById('ring-pct');
+        const circumference = 2 * Math.PI * 55;
+        const offset    = circumference - (percentage / 100) * circumference;
+        circle.style.stroke = gradeColor;
+        circle.style.strokeDashoffset = offset;
+
+        let cur = 0;
+        const step = Math.ceil(percentage / 40) || 1;
+        const iv = setInterval(() => {
+          cur = Math.min(cur + step, percentage);
+          pctEl.textContent = cur + '%';
+          if (cur >= percentage) clearInterval(iv);
+        }, 30);
+      }, 100);
+
+      resultEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

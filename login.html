@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - TAV SMKN 3 Surabaya</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .auth-wrapper {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+    .auth-box {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .auth-box h2 {
+      text-align: center;
+      margin-bottom: 6px;
+      color: var(--primary, #c68b1f);
+      font-size: 1.6rem;
+    }
+    .auth-box p.sub {
+      text-align: center;
+      color: #888;
+      margin-bottom: 28px;
+      font-size: 14px;
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #444;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: border 0.2s;
+      font-family: inherit;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary, #c68b1f);
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      font-size: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      background: var(--primary, #c68b1f);
+      color: white;
+      font-weight: 700;
+      transition: opacity 0.2s;
+      font-family: inherit;
+      margin-top: 4px;
+    }
+    .submit-btn:hover { opacity: 0.88; }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    #error-msg {
+      color: #e74c3c;
+      text-align: center;
+      margin-top: 12px;
+      font-size: 13px;
+      display: none;
+      padding: 8px 12px;
+      background: #fff5f5;
+      border-radius: 8px;
+      border: 1px solid #fcc;
+    }
+    #info-msg {
+      color: #1a6e3c;
+      text-align: center;
+      margin-top: 12px;
+      font-size: 13px;
+      display: none;
+      padding: 8px 12px;
+      background: #f0fff4;
+      border-radius: 8px;
+      border: 1px solid #b2f5c8;
+    }
+    .auth-switch {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 14px;
+      color: #666;
+    }
+    .auth-switch a {
+      color: var(--primary, #c68b1f);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .auth-switch a:hover { text-decoration: underline; }
+    .divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 20px 0;
+    }
+    .resend-link {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 10px;
+      color: #888;
+    }
+    .resend-link a {
+      color: var(--primary, #c68b1f);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .resend-link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header></header>
+
+  <div class="auth-wrapper">
+    <div class="auth-box">
+      <h2>🔑 Login</h2>
+      <p class="sub">Masuk ke Portal Pembelajaran TAV</p>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="input-email" placeholder="contoh@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="input-password" placeholder="Password Anda"/>
+      </div>
+
+      <button class="submit-btn" id="login-btn" onclick="handleLogin()">Masuk</button>
+      <div id="error-msg"></div>
+      <div id="info-msg"></div>
+
+      <div class="resend-link" id="resend-section" style="display:none;">
+        Belum menerima email verifikasi?
+        <a onclick="resendVerification()">Kirim ulang</a>
+      </div>
+
+      <hr class="divider"/>
+      <div class="auth-switch">
+        Belum punya akun? <a href="register.html">Daftar di sini</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="copyright">
+        <p>© 2025 Teknik Audio Video SMKN 3 Surabaya.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="header-template.js"></script>
+  <script>
+    if (isLoggedIn()) window.location.href = 'pembelajaran.html';
+
+    let lastEmail = '', lastPassword = '';
+
+    function handleLogin() {
+      const email    = document.getElementById('input-email').value.trim();
+      const password = document.getElementById('input-password').value;
+      const errEl    = document.getElementById('error-msg');
+      const infoEl   = document.getElementById('info-msg');
+      const btn      = document.getElementById('login-btn');
+      const resend   = document.getElementById('resend-section');
+
+      errEl.style.display  = 'none';
+      infoEl.style.display = 'none';
+      resend.style.display = 'none';
+
+      if (!email || !password) {
+        errEl.textContent    = 'Email dan password tidak boleh kosong.';
+        errEl.style.display  = 'block';
+        return;
+      }
+
+      lastEmail    = email;
+      lastPassword = password;
+      btn.textContent = 'Memproses...';
+      btn.disabled    = true;
+
+      loginUser(email, password)
+        .then(() => {
+          window.location.href = 'pembelajaran.html';
+        })
+        .catch(err => {
+          btn.textContent = 'Masuk';
+          btn.disabled    = false;
+
+          if (err.message === 'EMAIL_NOT_VERIFIED') {
+            errEl.textContent   = 'Email Anda belum diverifikasi. Cek inbox atau folder spam.';
+            errEl.style.display = 'block';
+            resend.style.display = 'block';
+          } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+            errEl.textContent   = 'Email atau password salah.';
+            errEl.style.display = 'block';
+          } else {
+            errEl.textContent   = 'Gagal login: ' + err.message;
+            errEl.style.display = 'block';
+          }
+        });
+    }
+
+    function resendVerification() {
+      const infoEl = document.getElementById('info-msg');
+      const errEl  = document.getElementById('error-msg');
+
+      auth.signInWithEmailAndPassword(lastEmail, lastPassword)
+        .then(cred => {
+          return cred.user.sendEmailVerification().then(() => auth.signOut());
+        })
+        .then(() => {
+          infoEl.textContent   = '✅ Email verifikasi sudah dikirim ulang. Cek inbox Anda.';
+          infoEl.style.display = 'block';
+          errEl.style.display  = 'none';
+        })
+        .catch(() => {
+          errEl.textContent   = 'Gagal kirim ulang. Coba lagi nanti.';
+          errEl.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleLogin();
+    });
+  </script>
+</body>
+</html>

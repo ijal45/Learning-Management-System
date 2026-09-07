@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TAV SMKN 3 Surabaya - Materi Pembelajaran</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+</head>
+<body>
+  <header></header>
+
+  <div id="pembelajaran-content">
+    <div class="container">
+
+      <div id="materi-view">
+
+        <!-- ── Daftar kartu materi utama ── -->
+        <div id="materi-list" style="display: block;">
+          <h3 style="text-align:center; margin:40px 0 20px;">Materi Pembelajaran TAV Kelas 10</h3>
+          <p style="text-align:center; margin-bottom:40px; color:#555;">
+            Pilih materi untuk melihat dokumen lengkap
+          </p>
+
+          <div class="materi-container">
+
+            <!-- Kartu Materi 1 -->
+            <div class="materi-card" data-aos="fade-up">
+              <div class="materi-thumbnail">
+                <img src="images/Materi-1.png" alt="Gambar Teknik Elektronika" />
+              </div>
+              <div class="materi-info">
+                <h3>Gambar Teknik Elektronika</h3>
+                <p>Pengenalan macam-macam peralatan gambar, simbol komponen dan rangkaian elektronika, serta instrumentasi.</p>
+                <br>
+                <button class="btn" onclick="showMateri('materi-1')">Lihat Materi</button>
+              </div>
+            </div>
+
+            <!-- Kartu Materi 2 -->
+            <div class="materi-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="materi-thumbnail">
+                <img src="images/Materi-2.png" alt="Alat Ukur" />
+              </div>
+              <div class="materi-info">
+                <h3>Alat Ukur Listrik, Elektronika dan Instrumentasi</h3>
+                <p>Multimeter, osiloskop, function generator, power supply, LCR meter & praktik pengukuran.</p>
+                <br>
+                <button class="btn" onclick="showMateri('materi-2')">Lihat Materi</button>
+              </div>
+            </div>
+
+            <!-- Kartu Materi 3 -->
+            <div class="materi-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="materi-thumbnail">
+                <img src="images/Materi-3.png" alt="Komponen" />
+              </div>
+              <div class="materi-info">
+                <h3>Komponen Elektronika Aktif dan Pasif</h3>
+                <p>Resistor, kapasitor, dioda, transistor, IC beserta karakteristik dan fungsi.</p>
+                <br>
+                <button class="btn" onclick="showMateri('materi-3')">Lihat Materi</button>
+              </div>
+            </div>
+
+            <!-- Kartu Materi 4 -->
+            <div class="materi-card" data-aos="fade-up" data-aos-delay="300">
+              <div class="materi-thumbnail">
+                <img src="images/Materi-4.png" alt="Konsep Dasar" />
+              </div>
+              <div class="materi-info">
+                <h3>Konsep Dasar Elektronika dan Rangkaian Elektronika</h3>
+                <p>Hukum Ohm & Kirchhoff, rangkaian seri-paralel, serta contoh rangkaian dasar.</p>
+                <br>
+                <button class="btn" onclick="showMateri('materi-4')">Lihat Materi</button>
+              </div>
+            </div>
+
+            <!-- Kartu Materi 5 -->
+            <div class="materi-card" data-aos="fade-up" data-aos-delay="400">
+              <div class="materi-thumbnail">
+                <img src="images/Materi-5.png" alt="K3" />
+              </div>
+              <div class="materi-info">
+                <h3>K3 (Kesehatan dan Keselamatan Kerja)</h3>
+                <p>Landasan Hukum K3, APD (Alat Pelindung Diri), Implementasi K3.</p>
+                <br>
+                <button class="btn" onclick="showMateri('materi-5')">Lihat Materi</button>
+              </div>
+            </div>
+
+            <!-- Kartu Materi 6 -->
+            <div class="materi-card" data-aos="fade-up" data-aos-delay="500">
+              <div class="materi-thumbnail">
+                <img src="images/Materi-6.png" alt="Manufaktur" />
+              </div>
+              <div class="materi-info">
+                <h3>Manufaktur</h3>
+                <p>Proses manufaktur elektronika, Peralatan Manufaktur.</p>
+                <br>
+                <button class="btn" onclick="showMateri('materi-6')">Lihat Materi</button>
+              </div>
+            </div>
+
+            <!-- Kartu Materi 7 -->
+            <div class="materi-card" data-aos="fade-up" data-aos-delay="600">
+              <div class="materi-thumbnail">
+                <img src="images/Materi-7.png" alt="Technopreneur" />
+              </div>
+              <div class="materi-info">
+                <h3>Technopreneur</h3>
+                <p>Dasar kewirausahaan teknologi dan Pengembangan produk elektronika.</p>
+                <br>
+                <button class="btn" onclick="showMateri('materi-7')">Lihat Materi</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── Tampilan detail / sub-materi ── -->
+        <div id="materi-detail" style="display: none;">
+
+          <!-- Tombol kembali — isinya diganti dinamis oleh script.js -->
+          <div id="back-btn-container" style="margin-bottom: 24px;">
+            <button class="btn" onclick="backToList()" style="background: var(--secondary);">
+              ← Kembali ke Daftar Materi
+            </button>
+          </div>
+
+          <!-- Konten: kartu sub-materi ATAU iframe dokumen -->
+          <div id="materi-content-body" style="
+            background: white;
+            padding: 28px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+          ">
+            <p style="text-align:center; color:#999;">Memuat materi...</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>TAV SMKN 3 Surabaya</h3>
+          <p>Portal pembelajaran digital untuk siswa jurusan Teknik Audio Video kelas 10.</p>
+          <p>Jl. Pacar No. 123, Surabaya<br/>Jawa Timur, Indonesia</p>
+        </div>
+        <div class="footer-column">
+          <h3>Tautan Cepat</h3>
+          <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="pembelajaran.html">Pembelajaran</a></li>
+            <li><a href="diskusi.html">Diskusi</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Pembelajaran</h3>
+          <ul>
+            <li><a href="materi.html">Materi Pembelajaran</a></li>
+            <li><a href="video.html">Video Pembelajaran</a></li>
+            <li><a href="simulasi.html">Simulasi Rangkaian</a></li>
+            <li><a href="assessment.html">Asesmen</a></li>
+            <li><a href="diskusi.html">Diskusi</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Hubungi Kami</h3>
+          <ul>
+            <li><a href="#">Email: sbysmkn3@gmail.com</a></li>
+            <li><a href="#">Telepon: (031) 5678910</a></li>
+            <li><a href="#">WhatsApp: +62 881-9029-871</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 2025 Teknik Audio Video SMKN 3 Surabaya. Hak Cipta Dilindungi.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ once: true, offset: 100 });</script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="header-template.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

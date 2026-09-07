@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TAV SMKN 3 Surabaya - Pembelajaran</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <img src="images/LOGO-SMK.png" alt="TAV SMKN 3 Surabaya Logo" />
+        <span>TAV SMKN 3 Surabaya</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="pembelajaran.html" class="active">Pembelajaran</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Pembelajaran Content -->
+  <div id="pembelajaran-content">
+    <div class="container">
+      <h2 class="section-title">Portal Pembelajaran TAV</h2>
+      <div class="pembelajaran-options">
+        <a href="materi.html" class="pembelajaran-option"> Materi Pembelajaran</a>
+        <a href="video.html" class="pembelajaran-option"> Video Pembelajaran</a>
+        <a href="simulasi.html" class="pembelajaran-option"> Simulasi Rangkaian</a>
+        
+        <!-- Asesmen dengan icon yang sama -->
+        <a href="assessment.html" class="pembelajaran-option"> Asesmen</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>TAV SMKN 3 Surabaya</h3>
+          <p>Portal pembelajaran digital untuk siswa jurusan Teknik Audio Video kelas 10.</p>
+          <p>Jl. Pacar No. 123, Surabaya<br />Jawa Timur, Indonesia</p>
+        </div>
+        <div class="footer-column">
+          <h3>Tautan Cepat</h3>
+          <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="pembelajaran.html">Pembelajaran</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Pembelajaran</h3>
+          <ul>
+            <li><a href="materi.html">Materi Pembelajaran</a></li>
+            <li><a href="video.html">Video Pembelajaran</a></li>
+            <li><a href="simulasi.html">Simulasi Rangkaian</a></li>
+            <li><a href="assessment.html">Asesmen</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Hubungi Kami</h3>
+          <ul>
+            <li><a href="#">Email: sbysmkn3@gmail.com</a></li>
+            <li><a href="#">Telepon: (031) 5678910</a></li>
+            <li><a href="#">WhatsApp:+62 881-9029-871</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 2025 Teknik Audio Video SMKN 3 Surabaya. Hak Cipta Dilindungi.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="header-template.js"></script>
+  <script src="script.js"></script>
+  <script>
+    AOS.init({ once: true, offset: 100 });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js");
+      });
+    }
+  </script>
+</body>
+</html>

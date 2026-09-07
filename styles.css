@@ -1,0 +1,667 @@
+/* ============================================
+   TAV SMKN 3 Surabaya - styles.css
+   Mobile-First Responsive Design
+   ============================================ */
+
+:root {
+  --primary:   #c68b1f;
+  --secondary: #2c3e50;
+  --accent:    #e74c3c;
+  --light:     #ecf0f1;
+  --dark:      #2c3e50;
+  --success:   #2ecc71;
+  --warning:   #f39c12;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+
+html { height: 100%; }
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  user-select: none;
+}
+
+a, button, .topic-header { user-select: auto; cursor: pointer; }
+
+#home-content,
+#pembelajaran-content,
+#materi-content,
+#video-content,
+#simulasi-content,
+#assessment-content { flex: 1 0 auto; }
+
+footer { flex-shrink: 0; }
+
+/* ================================================
+   HEADER — DESKTOP
+   ================================================ */
+header {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.75rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  flex-shrink: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo img { height: 48px; margin-right: 10px; flex-shrink: 0; }
+
+/* Desktop nav */
+nav ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 4px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  display: block;
+}
+
+nav ul li a:hover { background-color: rgba(255,255,255,0.22); }
+
+nav ul li a.active {
+  background: white;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+nav ul li a#auth-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.55);
+  border-radius: 20px;
+  padding: 6px 16px;
+}
+
+nav ul li a#auth-btn:hover { background: white; color: var(--primary); }
+
+/* ================================================
+   HAMBURGER BUTTON — hanya muncul di mobile
+   ================================================ */
+.hamburger {
+  display: none;                        /* hidden di desktop */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.5);
+  border-radius: 8px;
+  cursor: pointer;
+  gap: 5px;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.hamburger:hover { background: rgba(255,255,255,0.28); }
+
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Animasi ☰ → ✕ */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ================================================
+   MOBILE NAV DROPDOWN
+   ================================================ */
+.mobile-nav {
+  display: none;                        /* hidden di desktop */
+  flex-direction: column;
+  background: #b57e18;                  /* sedikit lebih gelap dari header */
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding: 4px 0 10px;
+  animation: slideDown 0.22s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-nav.open { display: flex; }
+
+/* Setiap item menu */
+.mobile-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 13px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.15s;
+}
+
+.mobile-nav a:last-child { border-bottom: none; }
+.mobile-nav a:hover { background: rgba(255,255,255,0.12); }
+
+/* Halaman aktif */
+.mobile-nav a.active {
+  background: rgba(255,255,255,0.13);
+  border-left: 3px solid white;
+  padding-left: 17px;
+  font-weight: 700;
+}
+
+/* Ikon kecil di depan teks */
+.mnav-icon {
+  font-size: 15px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Tombol Login di mobile nav */
+.mobile-nav a.mnav-login {
+  margin: 10px 16px 2px;
+  border: 1.5px solid rgba(255,255,255,0.55) !important;
+  border-radius: 10px;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border-bottom: 1.5px solid rgba(255,255,255,0.55) !important;
+  padding: 11px 16px;
+}
+
+.mobile-nav a.mnav-login:hover {
+  background: white;
+  color: var(--primary);
+  border-color: white !important;
+}
+
+/* ================================================
+   HERO SECTION
+   ================================================ */
+.hero {
+  background: linear-gradient(rgba(44,62,80,0.8), rgba(0,0,0,0.8)),
+    url("/api/placeholder/1200/400") center/cover no-repeat;
+  color: white;
+  padding: 100px 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("images/3.jpeg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  z-index: -1;
+}
+
+.hero h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 20px; }
+.hero p {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  max-width: 700px;
+  margin: 0 auto 30px;
+  padding: 0 16px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: var(--accent);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.btn:hover { background-color: #c0392b; transform: translateY(-3px); }
+
+/* ================================================
+   FEATURES
+   ================================================ */
+.features { padding: 60px 0; background-color: white; }
+
+.section-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--dark);
+  position: relative;
+  padding-bottom: 15px;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 70px; height: 4px;
+  background-color: var(--accent);
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background-color: var(--light);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+  transition: transform 0.3s ease;
+}
+.feature-card:hover { transform: translateY(-8px); }
+
+.feature-img {
+  height: 180px;
+  background-color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 3rem;
+}
+
+.feature-content { padding: 20px; }
+.feature-content h3 { margin-bottom: 10px; color: var(--secondary); }
+
+/* ================================================
+   ABOUT
+   ================================================ */
+.about { padding: 60px 0; background-color: var(--light); }
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.about-img { border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.about-img img { width: 100%; height: auto; display: block; }
+
+.about-text h2 {
+  margin-bottom: 20px;
+  color: var(--secondary);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+
+/* ================================================
+   FOOTER
+   ================================================ */
+footer { background-color: var(--dark); color: white; padding: 40px 0 20px; }
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.footer-column h3 { margin-bottom: 20px; position: relative; padding-bottom: 10px; }
+.footer-column h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 50px; height: 2px;
+  background-color: var(--accent);
+}
+
+.footer-column ul { list-style: none; }
+.footer-column ul li { margin-bottom: 10px; padding-left: 20px; }
+.footer-column ul li a { color: #bdc3c7; text-decoration: none; transition: all 0.3s ease; }
+.footer-column ul li a:hover { color: white; padding-left: 5px; }
+
+.copyright {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.9rem;
+}
+
+/* ================================================
+   PEMBELAJARAN
+   ================================================ */
+#pembelajaran-content { display: block; padding: 40px 0; }
+
+.pembelajaran-options {
+  display: flex; justify-content: center;
+  flex-wrap: wrap; gap: 10px; margin-bottom: 30px;
+}
+
+.pembelajaran-option {
+  background-color: var(--light);
+  border: none; padding: 12px 25px; border-radius: 6px;
+  cursor: pointer; font-weight: bold;
+  transition: all 0.3s ease;
+  text-decoration: none; color: #333;
+}
+.pembelajaran-option:hover,
+.pembelajaran-option.active { background-color: var(--primary); color: white; }
+
+/* ================================================
+   TOPIC LIST
+   ================================================ */
+.topic-list { list-style: none; margin-top: 20px; }
+
+.topic-item {
+  background-color: white; border-radius: 8px;
+  margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden;
+}
+
+.topic-header {
+  background-color: var(--primary); color: white;
+  padding: 15px 20px; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.topic-content { display: none; padding: 20px; }
+.topic-content.active { display: block; }
+
+/* ================================================
+   VIDEO
+   ================================================ */
+.video-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.video-card { background-color: white; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+.video-thumbnail { height: 180px; background-color: #ddd; display: flex; align-items: center; justify-content: center; }
+.video-thumbnail img { width: 100%; height: 180px; object-fit: cover; }
+.video-info { padding: 15px; }
+.video-info h3 { margin-bottom: 10px; }
+
+/* ================================================
+   SIMULASI
+   ================================================ */
+.simulasi-list { list-style: none; margin-top: 20px; }
+
+.simulasi-item {
+  background-color: white; border-radius: 8px;
+  margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow: hidden; padding: 20px;
+}
+.simulasi-item h4 { margin-bottom: 10px; color: var(--secondary); }
+.simulasi-item p { margin-bottom: 15px; }
+
+/* ================================================
+   ASSESSMENT
+   ================================================ */
+.assessment-card {
+  background-color: white; border-radius: 8px;
+  padding: 20px; margin-bottom: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+.assessment-card h3 { margin-bottom: 15px; color: var(--secondary); }
+
+/* ================================================
+   MATERI DETAIL
+   ================================================ */
+#materi-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+#materi-content-body {
+  background: white;
+  padding: 32px 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 11pt;
+  line-height: 1.8;
+  color: #333;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+#materi-content-body * { max-width: 100%; box-sizing: border-box; }
+
+#materi-content-body table {
+  width: 100%; border-collapse: collapse;
+  margin: 16px 0; display: block;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+
+#materi-content-body td,
+#materi-content-body th {
+  border: 1px solid #ddd; padding: 8px 12px;
+  vertical-align: top; min-width: 80px;
+}
+
+#materi-content-body img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+
+#materi-content-body h1,
+#materi-content-body h2,
+#materi-content-body h3 { color: var(--secondary); margin: 20px 0 10px; word-break: break-word; }
+
+#materi-content-body p { margin-bottom: 12px; line-height: 1.8; }
+#materi-content-body iframe {
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  border-radius: 4px;
+  display: block;
+  min-height: 500px;
+}
+
+#materi-detail .btn {
+  background: var(--secondary); color: white;
+  border: none; padding: 12px 24px;
+  border-radius: 6px; cursor: pointer;
+  font-weight: bold; transition: background 0.3s;
+}
+#materi-detail .btn:hover { background: #1e2a3a; }
+
+/* ================================================
+   MATERI CARDS
+   ================================================ */
+.materi-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px; margin: 0 auto; max-width: 1200px;
+}
+
+.materi-card {
+  background: white; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex; flex-direction: column;
+}
+.materi-card:hover { transform: translateY(-6px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+
+.materi-thumbnail { height: 180px; overflow: hidden; }
+.materi-thumbnail img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.materi-card:hover .materi-thumbnail img { transform: scale(1.05); }
+
+.materi-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+.materi-info h3 { font-size: 1.25rem; margin-bottom: 12px; color: var(--secondary); line-height: 1.3; }
+.materi-info p { font-size: 0.95rem; color: #666; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
+.materi-info .btn { margin-top: auto; align-self: flex-start; padding: 10px 20px; font-size: 0.95rem; }
+
+.materi-detail-box {
+  background: white; border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  overflow: hidden; margin: 20px auto 40px;
+  border: 1px solid #e0e0e0;
+  max-width: 900px; width: 100%;
+}
+
+/* ================================================
+   RESPONSIVE — TABLET (max-width: 1024px)
+   ================================================ */
+@media screen and (max-width: 1024px) {
+  .container { width: 92%; }
+  .materi-container { grid-template-columns: repeat(2, 1fr); }
+  .feature-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ================================================
+   RESPONSIVE — MOBILE (max-width: 768px)
+   ================================================ */
+@media screen and (max-width: 768px) {
+  .container { width: 95%; padding: 0 12px; }
+
+  /* Sembunyikan nav desktop → tampilkan hamburger */
+  nav { display: none; }
+  .hamburger { display: flex; }
+
+  .header-content { flex-direction: row; justify-content: space-between; align-items: center; }
+  .logo { font-size: 1rem; }
+  .logo img { height: 38px; }
+
+  /* Tampilkan mobile-nav saat .open */
+  .mobile-nav { display: none; }
+  .mobile-nav.open { display: flex; }
+
+  .hero { padding: 60px 0; }
+  .about-content { grid-template-columns: 1fr; }
+  .about-img img { max-height: 260px; object-fit: cover; width: 100%; }
+  .feature-cards { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .video-container { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+  .footer-content { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .materi-container { grid-template-columns: 1fr; }
+  #materi-content-body { padding: 24px 20px; font-size: 10.5pt; }
+  #materi-detail { padding: 0 8px; }
+}
+
+/* ================================================
+   RESPONSIVE — MOBILE KECIL (max-width: 480px)
+   ================================================ */
+@media screen and (max-width: 480px) {
+  .logo span { font-size: 0.82rem; }
+
+  .hero { padding: 50px 0; }
+  .feature-cards { grid-template-columns: 1fr; gap: 14px; }
+  .feature-img { height: 140px; font-size: 2.5rem; }
+  .pembelajaran-options { flex-direction: column; align-items: stretch; }
+  .pembelajaran-option { width: 100%; text-align: center; }
+  .video-container { grid-template-columns: 1fr; }
+  .assessment-card { width: 100%; margin: 10px 0; }
+  .footer-content { grid-template-columns: 1fr; text-align: center; }
+  .footer-column { margin-bottom: 20px; }
+  .footer-column h3::after { left: 50%; transform: translateX(-50%); }
+  .footer-column ul li { padding-left: 0; }
+  .topic-header { font-size: 14px; padding: 11px 14px; }
+  .topic-content { padding: 14px; font-size: 0.9rem; }
+  .materi-container { grid-template-columns: 1fr; gap: 16px; }
+  #materi-content-body { padding: 16px 12px; font-size: 10pt; }
+  #materi-content-body table { font-size: 0.82rem; }
+  #materi-content-body td,
+  #materi-content-body th { padding: 6px 8px; min-width: 60px; }
+  #materi-detail { padding: 0 6px; }
+  .materi-detail-box { margin: 8px auto 16px; }
+  .btn { padding: 10px 18px; font-size: 0.9rem; }
+}
+
+/* ================================================
+   GOOGLE DOCS WRAPPER — RESPONSIVE SCALING
+   ================================================ */
+.gdocs-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  display: flex;
+  justify-content: center;
+}
+
+.gdocs-wrapper iframe {
+  width: 100%;
+  height: 750px;
+  border: none;
+  display: block;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 900px) {
+  #materi-content-body {
+    padding: 20px 16px;
+    font-size: 10.5pt;
+  }
+  .gdocs-wrapper iframe {
+    width: 100%;
+    height: 80vh;
+    transform: none;
+    transform-origin: unset;
+  }
+  .gdocs-wrapper {
+    height: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #materi-detail { padding: 0 6px; }
+  #materi-content-body {
+    padding: 14px 8px;
+    font-size: 10pt;
+    border-radius: 6px;
+  }
+  .gdocs-wrapper {
+    border-radius: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .gdocs-wrapper iframe {
+    width: 100%;
+    min-width: 320px;
+    height: 75vh;
+  }
+}

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TAV SMKN 3 Surabaya - Portal Pembelajaran</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <style>
+      /* ===== Tambahan: kartu fitur jadi tautan yang bisa diklik ===== */
+      a.feature-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      .hero .btn {
+       display: inline-block;
+       margin-top: 12px;
+       }
+
+      .hero .btn-secondary {
+        display: block;
+        margin: 12px auto 0;
+        width: fit-content;
+      }
+      /* ===== Tambahan: Profil Developer ===== */
+      .developer {
+        background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0));
+      }
+
+      .developer-card {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+      }
+
+      .developer-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 14px 32px rgba(0,0,0,0.12);
+      }
+
+      .developer-avatar {
+        flex-shrink: 0;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fecc4f, #fed400);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: #fff;
+        animation: floatY 3.5s ease-in-out infinite;
+      }
+
+      @keyframes floatY {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      .developer-text h3 {
+        margin-bottom: 8px;
+      }
+
+      .developer-role {
+        display: inline-block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: #fdad0d;
+        background: rgba(13,110,253,0.08);
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin-bottom: 12px;
+      }
+
+      .developer-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 16px;
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      .developer-logo img {
+        height: 32px;
+        width: auto;
+        opacity: 0.9;
+      }
+
+      @media (max-width: 640px) {
+        .developer-card {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .developer-avatar {
+          animation: none;
+        }
+        .developer-card {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+
+          <!-- Logo -->
+          <div class="logo">
+            <img src="images/LOGO-SMK.png" alt="TAV SMKN 3 Surabaya Logo" />
+            <span>TAV SMKN 3 Surabaya</span>
+          </div>
+
+          <!-- Nav Desktop (disembunyikan di mobile via CSS) -->
+          <nav>
+            <ul>
+              <li><a href="index.html" class="active">Beranda</a></li>
+              <li><a href="pembelajaran.html">Pembelajaran</a></li>
+              <li><a href="diskusi.html">Diskusi</a></li>
+              <li>
+                <a href="#" id="auth-btn" style="
+                  background: rgba(255,255,255,0.15);
+                  color: white;
+                  padding: 6px 16px;
+                  border-radius: 20px;
+                  font-size: 0.95rem;
+                  text-decoration: none;
+                  border: 1.5px solid rgba(255,255,255,0.55);
+                ">🔑 Login</a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Hamburger Button (hanya tampil di mobile) -->
+          <button
+            class="hamburger"
+            id="hamburger-btn"
+            aria-label="Buka menu navigasi"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Mobile Nav Dropdown -->
+      <div class="mobile-nav" id="mobile-nav" role="navigation">
+        <a href="index.html" class="active">🏠 Beranda</a>
+        <a href="pembelajaran.html">📚 Pembelajaran</a>
+        <a href="diskusi.html">💬 Diskusi</a>
+        <a href="#" id="mobile-auth-btn">🔑 Login</a>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         HOME CONTENT
+         ===================================================== -->
+    <div id="home-content">
+
+      <!-- Hero Section -->
+      <section class="hero" data-aos="fade-up" data-aos-duration="1500">
+        <div class="container">
+          <h1>Teknik Audio Video SMKN 3 Surabaya</h1>
+          <p>
+            Portal pembelajaran digital untuk siswa jurusan TAV kelas 10.
+            Tingkatkan keterampilan dan pengetahuan elektronika Anda melalui
+            materi, video pembelajaran, dan asesmen interaktif.
+          </p>
+          <a href="pembelajaran.html" class="btn">Mulai Belajar</a>
+          <a href="panduan.html" class="btn btn-secondary">Panduan Penggunaan</a>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="features">
+        <div class="container">
+          <h2 class="section-title">Fitur Pembelajaran</h2>
+          <div class="feature-cards">
+            <a href="materi.html" class="feature-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0">
+              <div class="feature-img">📚</div>
+              <div class="feature-content">
+                <h3>Materi Pembelajaran</h3>
+                <p>Akses materi pembelajaran kurikulum TAV.</p>
+              </div>
+            </a>
+            <a href="video.html" class="feature-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+              <div class="feature-img">🎬</div>
+              <div class="feature-content">
+                <h3>Video Pembelajaran</h3>
+                <p>Tonton video tutorial praktik dan teori yang memudahkan pemahaman konsep elektronika.</p>
+              </div>
+            </a>
+            <a href="assessment-quiz.html" class="feature-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+              <div class="feature-img">📝</div>
+              <div class="feature-content">
+                <h3>Asesmen</h3>
+                <p>Uji pemahaman Anda melalui Tugas.</p>
+              </div>
+            </a>
+            <a href="diskusi.html" class="feature-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+              <div class="feature-img">💬</div>
+              <div class="feature-content">
+                <h3>Diskusi</h3>
+                <p>Ruang diskusi real-time antara siswa dan guru. Login terlebih dahulu untuk mulai berdiskusi.</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- About TAV -->
+      <section class="about">
+        <div class="container">
+          <h2 class="section-title">Profil TAV SMKN 3 Surabaya</h2>
+          <div class="about-content">
+            <div class="about-img">
+              <img src="images/1.jpeg" alt="Laboratorium TAV" width="100%" />
+            </div>
+            <div class="about-text" style="text-align: justify">
+              <h2>Jurusan Teknik Audio Video</h2>
+              <p>Jurusan Teknik Audio Video (TAV) SMKN 3 Surabaya merupakan program pendidikan yang berfokus pada pengembangan keterampilan di bidang elektronika, audio, dan video. Lulusan TAV dibekali dengan kemampuan untuk merancang, merakit, dan memperbaiki perangkat elektronik.</p>
+              <br />
+              <p>Didukung oleh tenaga pengajar yang berpengalaman dan fasilitas laboratorium yang lengkap, kami berkomitmen untuk menghasilkan teknisi yang kompeten dan siap kerja di industri elektronika.</p>
+              <br />
+              <p>Visi kami adalah menjadi pusat pendidikan vokasi unggul yang menghasilkan teknisi profesional di bidang audio video yang berdaya saing global.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profil Developer -->
+      <section class="developer">
+        <div class="container">
+          <h2 class="section-title">Profil Developer</h2>
+          <div class="developer-card" data-aos="fade-up" data-aos-duration="1000">
+            <div class="developer-avatar">👨‍💻</div>
+            <div class="developer-text">
+              <span class="developer-role">Mahasiswa Akhir</span>
+              <h3>Pengembang Portal Pembelajaran TAV</h3>
+              <p style="text-align: justify;">
+                Portal ini dikembangkan oleh Abdul Hakim Afrizal mahasiswa tingkat akhir Program Studi
+                S1 Pendidikan Teknik Elektro, Universitas Negeri Surabaya. Dibangun
+                sebagai bentuk kontribusi nyata dalam dunia pendidikan vokasi, khususnya
+                untuk mendukung proses belajar mengajar siswa jurusan Teknik Audio Video
+                SMKN 3 Surabaya melalui pemanfaatan teknologi digital.
+              </p>
+              <p style="text-align: justify;">
+                Pengembangan portal ini juga menjadi bagian dari perjalanan akademik dan
+                penelitian penulis di bidang media pembelajaran berbasis web, dengan harapan
+                dapat memberikan pengalaman belajar yang lebih interaktif dan mudah diakses
+                oleh siswa.
+              </p>
+              <div class="developer-logo">
+                <img src="images/logo-unesa.png" alt="Logo UNESA" />
+                <span>Pendidikan Teknik Elektro &mdash; Universitas Negeri Surabaya</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>TAV SMKN 3 Surabaya</h3>
+            <p>Portal pembelajaran digital untuk siswa jurusan Teknik Audio Video kelas 10.</p>
+            <p>Jl. Pacar No. 123, Surabaya<br />Jawa Timur, Indonesia</p>
+          </div>
+          <div class="footer-column">
+            <h3>Tautan Cepat</h3>
+            <ul>
+              <li><a href="index.html">Beranda</a></li>
+              <li><a href="pembelajaran.html">Pembelajaran</a></li>
+              <li><a href="diskusi.html">Diskusi</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Pembelajaran</h3>
+            <ul>
+              <li><a href="materi.html">Materi Pembelajaran</a></li>
+              <li><a href="video.html">Video Pembelajaran</a></li>
+              <li><a href="simulasi.html">Simulasi Rangkaian</a></li>
+              <li><a href="assessment-quiz.html">Asesmen</a></li>
+              <li><a href="diskusi.html">Diskusi</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Hubungi Kami</h3>
+            <ul>
+              <li><a href="#">Email: sbysmkn3@gmail.com</a></li>
+              <li><a href="#">Telepon: (031) 5678910</a></li>
+              <li><a href="#">WhatsApp: +62 881-9029-871</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>© 2025 Teknik Audio Video SMKN 3 Surabaya. Hak Cipta Dilindungi.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="auth.js"></script>
+    <script src="header-template.js"></script>
+    <script src="mobile-nav.js"></script>
+    <script src="script.js"></script>
+    <script>
+      AOS.init({ once: true, offset: 100 });
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((reg) => console.log("SW registered:", reg.scope))
+            .catch((err) => console.error("SW failed:", err));
+        });
+      }
+    </script>
+  </body>
+</html>
